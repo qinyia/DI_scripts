@@ -108,9 +108,9 @@ All_var				= (/"FLUT","TGCLDLWP","PRECT","CLDLOW_CAL","FSNTOA","CLDLOW","TREFHT"
 All_var_levs			= (/FLUT_levs,TGCLDLWP_levs,PRECT_levs,CLDLOW_CAL_levs,FSNTOA_levs,CLDLOW_levs,TREFHT_levs,U10_levs,LHFLX_levs,TS_levs/)
 All_varDiff_levs		= (/FLUT_Diff_levs,TGCLDLWP_Diff_levs,PRECT_Diff_levs,CLDLOW_CAL_Diff_levs,FSNTOA_Diff_levs,CLDLOW_Diff_levs,TREFHT_Diff_levs,U10_Diff_levs,LHFLX_Diff_levs,TS_Diff_levs/)
 All_varDiff2_levs		= (/FLUT_Diff_levs,TGCLDLWP_Diff_levs,PRECT_Diff2_levs,CLDLOW_CAL_Diff2_levs,FSNTOA_Diff_levs,CLDLOW_Diff_levs,TREFHT_Diff2_levs,U10_Diff2_levs,LHFLX_Diff2_levs,TS_Diff2_levs/)
-All_var_units			= (/"W/m2","g/m2","mm/day","fraction","W/m2","fraction","K","m/s","W/m2","K"/)
+All_var_units			= (/"W m~S~-2~N~","g m~S~-2~N~","mm day~S~-1~N~","fraction","W m~S~-2~N~","fraction","K","m s~S~-1~N~","W m~S~-2~N~","K"/)
 
-vector				= (/8,6,7/)
+vector				= (/4,2/)
 
 var				= All_var((/vector/))
 var_levs			= All_var_levs((/vector/),:)
@@ -136,7 +136,7 @@ case				= (/"def","new"/)
 ;endyear				= (/"0002","0004","0006","0008","0010","0012"/)
 endyear				= (/"0004","0008","0012"/)
 
-Dir				= "/home/share3/lyl/work3/qinyi/double-ITCZ/data/"
+Dir				= "/home/share3/lyl/work3/qinyi/data/double-ITCZ/"
 
 do icomp = 0,dimsizes(compare_type)-1
 print(compare_type(icomp))
@@ -151,6 +151,23 @@ print(compare_type(icomp))
 sstvt_case		= (/"BC5_f19g16_mac2_cosp","BC5_f19g16_sstvt_0.85"/)
 sstvt_casename		= (/"Gauss_PDF","1.85CLD"/)
 
+do ivar=0,dimsizes(var)-1
+print(var(ivar))
+
+
+latS 			= -40.
+latE 			= 40.
+lonS 			= 100.
+lonE 			= 290.
+
+plot_type			= "pdf"
+
+;wks   = gsn_open_wks (plot_type, "./figure/fig1_lat_lon_"+compare_type(icomp)+"_"+sstvt_case(isstcase)+"_"+season(is)+"_"+latE+"_"+lonE+"_revision_1_sstvt_"+var(ivar))
+wks   = gsn_open_wks (plot_type, "./figure/fig1_lat_lon_"+compare_type(icomp)+"_"+latE+"_"+lonE+"_revision_1_sstvt_"+var(ivar))
+
+plot				= new((/dimsizes(sstvt_case),dimsizes(endyear),6/),graphic)
+dum1 				= new((/dimsizes(sstvt_case),dimsizes(endyear),4/),graphic)
+dum2 				= new((/dimsizes(sstvt_case),dimsizes(endyear),4/),graphic)
 
 
 do isstcase = 0,dimsizes(sstvt_case)-1
@@ -187,19 +204,12 @@ print(case(icase))
 
 do is = 0,dimsizes(season)-1
 
+
 do iend = 0,dimsizes(endyear)-1
 
 fapend 					= (/"_"+season(is)+"_climo.nc", \
        					    "_"+season(is)+"_climo_"+endyear(iend)+".nc", \
-	   				    "_"+season(is)+"_climo_"+endyear(iend)+".nc" /)
-;fapend 					= (/"_"+season(is)+"_climo.nc", \
-;       					    ".cam.h0."+endyear(iend)+".nc", \
-;	   				    ".cam.h0."+endyear(iend)+".nc" /)
-;
-
-
-do ivar=0,dimsizes(var)-1
-print(var(ivar))
+	   				    	"_"+season(is)+"_climo_"+endyear(iend)+".nc" /)
 
 
 
@@ -251,6 +261,7 @@ end if
 ;=====================================================================
 
 print(casename(0))
+print(fdir(0)+"	"+fapend(0)+"	"+casename(0)+"	"+var(ivar))
 
 result_obs				= get_var_2D(fdir(0),fapend(0),casename(0),var(ivar),"obs")
 var_obs					= result_obs[0]
@@ -415,12 +426,6 @@ delete([/U_obs,V_obs,lat_obs,lon_obs,U_def,V_def,lat_def,lon_def,U_new,V_new,lat
 ;lonS 			= 0.
 ;lonE 			= 360.
 
-latS 			= -40.
-latE 			= 40.
-lonS 			= 100.
-lonE 			= 290.
-
-
 
 if(var(ivar).eq."PSL".or.var(ivar).eq."SST".or.var(ivar).eq."PRECT")then
 	on_vector		= True
@@ -438,12 +443,8 @@ end if
 ; Setting Resources
 ;=====================================================================
 
-plot_type			= "pdf"
 
 ;wks   = gsn_open_wks (plot_type, "./figure/fig1_lat_lon_"+var(ivar)+"_"+compare_type(icomp)+"_"+case(icase)+"_"+season(is)+"_onvector-"+on_vector+"_online-"+on_line+"_"+latE+"_"+lonE+"_revision_1_no_OrderNumber" ) 
-
-wks   = gsn_open_wks (plot_type, "./figure/fig1_lat_lon_"+var(ivar)+"_"+compare_type(icomp)+"_"+case(icase)+"_"+season(is)+"_onvector-"+on_vector+"_online-"+on_line+"_"+latE+"_"+lonE+"_revision_1_sstvt_"+casename(2)+"_endyear_"+endyear(iend)+"_singleyear" ) 
-plot				= new((/6/),graphic)
 
 ;gsn_define_colormap(wks,"BlueDarkRed18")
 ;cmap1				= read_colormap_file("WhiteBlueGreenYellowRed")
@@ -479,6 +480,11 @@ res@tmXBTickSpacingF 		= 20.
 
 res@tmXBLabelFontHeightF  	= 0.02
 res@tmYLLabelFontHeightF  	= 0.02
+
+res@tmXTOn					= False
+res@tmYROn					= False
+res@tmXBMinorOn				= False
+res@tmYLMinorOn				= False
 
 ;==========================================================
 ;==========================================================
@@ -645,7 +651,7 @@ do icli = 0,2
 	sdid			= gsn_csm_contour(wks,var_tmp,sdres)
 	cnid			= gsn_csm_contour(wks,SST_tmp,cnres)
 	ovid			= gsn_csm_contour(wks,SST_tmp,resov)
-	plot(icli)		= gsn_csm_map(wks,mpres)
+	plot(isstcase,iend,icli)		= gsn_csm_map(wks,mpres)
 
 ;	if(on_line)then
 ;	overlay(plot(icli),sdid)
@@ -663,16 +669,16 @@ do icli = 0,2
 
 ; vector first, contour line follows.
 	if(on_vector)then
-	overlay(plot(icli),sdid)
-	overlay(plot(icli),vcid)
+	overlay(plot(isstcase,iend,icli),sdid)
+	overlay(plot(isstcase,iend,icli),vcid)
 ;	overlay(plot(icli),ovid)
 		if(on_line)then
-			overlay(plot(icli),cnid)
+			overlay(plot(isstcase,iend,icli),cnid)
 		end if
 	else
-	overlay(plot(icli),sdid)
+	overlay(plot(isstcase,iend,icli),sdid)
 		if(on_line)then
-			overlay(plot(icli),cnid)
+			overlay(plot(isstcase,iend,icli),cnid)
 		end if
 	end if
 
@@ -732,19 +738,19 @@ if(idiff.ne.2)then
 	vcid			= gsn_csm_vector(wks,U_tmp(::3,::3),V_tmp(::3,::3),vcres)
 	sdid			= gsn_csm_contour(wks,var_tmp,sdres)
 	cnid			= gsn_csm_contour(wks,SST_tmp,cnres)
-	plot(idiff+3)		= gsn_csm_map(wks,mpres)
+	plot(isstcase,iend,idiff+3)		= gsn_csm_map(wks,mpres)
 
 ; vector first, contour line follows.
 	if(on_vector)then
-	overlay(plot(idiff+3),sdid)
-	overlay(plot(idiff+3),vcid)
+	overlay(plot(isstcase,iend,idiff+3),sdid)
+	overlay(plot(isstcase,iend,idiff+3),vcid)
 		if(on_line)then
-			overlay(plot(idiff+3),cnid)
+			overlay(plot(isstcase,iend,idiff+3),cnid)
 		end if
 	else
-	overlay(plot(idiff+3),sdid)
+	overlay(plot(isstcase,iend,idiff+3),sdid)
 		if(on_line)then
-			overlay(plot(idiff+3),cnid)
+			overlay(plot(isstcase,iend,idiff+3),cnid)
 		end if
 	end if
 
@@ -762,9 +768,6 @@ end do ; do idff=
 ;----------------------------------------------------------
 ; add one box over eastern pacific that we care more about.
 ;----------------------------------------------------------
-
-  dum1 = new(4,graphic)
-  dum2 = new(4,graphic)
 
   resp = True
   resp@gsLineThicknessF = 2.0
@@ -790,8 +793,8 @@ end do ; do idff=
 
 ;  if(var(ivar).eq."PRECT".or.var(ivar).eq."CLDLOW".or.var(ivar).eq."SST".or.var(ivar).eq."CLDLOW_CAL".or.var(ivar).eq."TGCLDLWP")then
   do i = 0,3
-  	dum1(i) = gsn_add_polyline(wks,plot(5),xpts1(i:i+1),ypts1(i:i+1),resp1)
-  	dum2(i) = gsn_add_polyline(wks,plot(5),xpts2(i:i+1),ypts2(i:i+1),resp2)
+  	dum1(isstcase,iend,i) = gsn_add_polyline(wks,plot(isstcase,iend,5),xpts1(i:i+1),ypts1(i:i+1),resp1)
+  	dum2(isstcase,iend,i) = gsn_add_polyline(wks,plot(isstcase,iend,5),xpts2(i:i+1),ypts2(i:i+1),resp2)
   end do
 ;  end if
 
@@ -816,7 +819,9 @@ resP2@amJust			= "TopLeft"
 resP2@gsnPanelXWhiteSpacePercent = 2.
 resP2@gsnPanelYWhiteSpacePercent = 5.
 
-gsn_panel(wks,(/plot(0),plot(3),plot(1),plot(4),plot(2),plot(5)/),(/3,2/),resP2)
+resP2@gsnPanelMainString	= sstvt_case(isstcase)+", endyear="+endyear(iend)
+
+gsn_panel(wks,(/plot(isstcase,iend,0),plot(isstcase,iend,3),plot(isstcase,iend,1),plot(isstcase,iend,4),plot(isstcase,iend,2),plot(isstcase,iend,5)/),(/3,2/),resP2)
 
 ;delete(res)
 
@@ -825,16 +830,16 @@ delete(res1)
 delete(var_interp)
 delete(var_interp_diff)
 
-delete(plot)
+;delete(plot)
 
 delete(cmap1)
 delete(cmap2)
 
 delete([/sdres,cnres,vcres/])
 
-end do; do ivar=
-
 end do ; do iend=
+
+
 end do ; do is=
 
 if(compare_type(icomp) .eq."amip-obs" .or. compare_type(icomp) .eq."cmip-obs")then
@@ -845,6 +850,32 @@ end do; do icase=
 
 end do ; do isstcase=
 
+; --- notion: isstcase cannot start from zero, because it will cause two same plots on the same page.
+; --- this will lead to some strange errors. 
+do isstcase = 1,dimsizes(sstvt_case)-1
+; ---- plot all sstvt results with different endyear at the same plot
+resP3			= True
+resP3@amJust	= "BottomLeft"
+resP3@gsnPanelXWhiteSpacePercent = 2.
+resP3@gsnPanelYWhiteSpacePercent = 5.
+resP3@gsnPanelFigureStrings	= (/"a)","b)","c)","d)","e)","f)"/)
+resP3@gsnPanelMainString		 = sstvt_case(isstcase)
+
+resP3@gsnPanelRowSpec		= True
+
+plot_all		= new(dimsizes(endyear)+2,graphic)
+plot_all(0) 	= plot(0,dimsizes(endyear)-1,3)
+plot_all(1)		= plot(0,dimsizes(endyear)-1,5)
+plot_all(2:)	= plot(isstcase,:,5)
+
+gsn_panel(wks,plot_all,(/1,2,2/),resP3)
+;gsn_panel(wks,plot_all,(/3,2/),resP3)
+
+end do ; do isstcase=
+
+delete(plot)
+
+end do; do ivar=
 end do; do icomp=
                                
 end

@@ -158,7 +158,7 @@ compare_type 		= (/"cmip-obs"/)
 
 endyear			= (/"0004","0006","0008","0012"/)
 
-Dir_obs			= "/home/lyl/WORK3/qinyi/double-ITCZ/data/"
+Dir_obs			= "/home/lyl/WORK3/qinyi/data/double-ITCZ/"
 Dir			= "/home/lyl/WORK4/cesm1_2_1/archive/"
 Dir_append		= "/atm/hist/"
 

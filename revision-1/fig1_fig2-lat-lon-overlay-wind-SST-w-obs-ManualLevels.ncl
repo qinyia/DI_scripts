@@ -45,8 +45,8 @@ begin
 ;*********************************************
 
 season				= (/"ANN"/)
-CLDLOW_levs			= (/5,10,15,20,25,30,40,50,60,70,75,80,85,90,95/)
-CLDLOW_CAL_levs			= (/5,10,15,20,25,30,40,50,60,70,75,80,85,90,95/)
+CLDLOW_levs			= (/5,10,15,20,25,30,40,50,60,70,75,80,85,90,95/)/100.
+CLDLOW_CAL_levs			= (/5,10,15,20,25,30,40,50,60,70,75,80,85,90,95/)/100.
 FSNT_levs			= (/25.,50.,75.,100.,125.,150.,175.,200.,225.,250.,275.,300.,325.,350.,375/)
 FSNTOA_levs			= (/25.,50.,75.,100.,125.,150.,175.,200.,225.,250.,275.,300.,325.,350.,375/)
 PRECT_levs			= (/1.,2,3,4,5,6,7,8,9,10,11,12,13,15,17/)
@@ -75,11 +75,11 @@ SST_Diff2_levs			= (/-5,-4,-3,-2,-1,-.5,-.2,0,.2,.5,1,2,3,4,5/)
 PRECT_Diff_levs			 	= (/-6,-5,-4,-3,-2,-1,-0.5,0,0.5,1,2,3,4,5,6/)
 PRECT_Diff2_levs			= (/-4,-3,-2.5,-2,-1.5,-1,-.5,0,.5,1,1.5,2.,2.5,3.,4/)
 
-CLDLOW_Diff_levs		= (/-50,-40,-30,-20,-15,-10,-5,0,5,10,15,20,30,40,50/)
-CLDLOW_Diff2_levs		= (/-35,-30,-25,-20,-15,-10,-5,0,5,10,15,20,25,30,35/)
+CLDLOW_Diff_levs		= (/-50,-40,-30,-20,-15,-10,-5,0,5,10,15,20,30,40,50/)/100.
+CLDLOW_Diff2_levs		= (/-35,-30,-25,-20,-15,-10,-5,0,5,10,15,20,25,30,35/)/100.
 
-CLDLOW_CAL_Diff_levs		= (/-50,-40,-30,-20,-15,-10,-5,0,5,10,15,20,30,40,50/)
-CLDLOW_CAL_Diff2_levs		= (/-35,-30,-25,-20,-15,-10,-5,0,5,10,15,20,25,30,35/)
+CLDLOW_CAL_Diff_levs		= (/-50,-40,-30,-20,-15,-10,-5,0,5,10,15,20,30,40,50/)/100.
+CLDLOW_CAL_Diff2_levs		= (/-35,-30,-25,-20,-15,-10,-5,0,5,10,15,20,25,30,35/)/100.
 
 ;FLUT_Diff_levs			= (/-20.,-15.,-10.,-8.,-6.,-4.,-2.,0.,2.,4.,6.,8.,10.,15.,20/)
 FLUT_Diff_levs			= (/-25.,-20.,-15.,-10.,-7.,-5.,-3.,0.,3.,5.,7.,10.,15.,20.,25/)
@@ -95,7 +95,7 @@ var				= (/"FLUT","TGCLDLWP","PRECT","CLDLOW_CAL","FSNTOA"/)
 var_levs			= (/FLUT_levs,TGCLDLWP_levs,PRECT_levs,CLDLOW_CAL_levs,FSNTOA_levs/)
 varDiff_levs			= (/FLUT_Diff_levs,TGCLDLWP_Diff_levs,PRECT_Diff_levs,CLDLOW_CAL_Diff_levs,FSNTOA_Diff_levs/)
 varDiff2_levs			= (/FLUT_Diff_levs,TGCLDLWP_Diff_levs,PRECT_Diff2_levs,CLDLOW_CAL_Diff2_levs,FSNTOA_Diff_levs/)
-var_units			= (/"W/m2","g/m2","mm/day","fraction","W/m2"/)
+var_units			= (/"W m~S~-2~N~","g m~S~-2~N~","mm day~S~-1~N~","fraction","W m~S~-2~N~"/)
 
 line_levs			= (/SSTsp_levs/)
 lineDiff_levs			= (/SSTsp_Diff_levs/)
@@ -112,7 +112,8 @@ compare_type			= (/"cmip-obs"/)
 
 case				= (/"def","new"/)
 
-Dir				= "/home/share3/lyl/work3/qinyi/double-ITCZ/data/"
+;Dir				= "/home/share3/lyl/work3/qinyi/double-ITCZ/data/"
+Dir				= "/home/share3/lyl/work3/qinyi/data/double-ITCZ/"
 
 do icomp = 0,dimsizes(compare_type)-1
 print(compare_type(icomp))
@@ -126,10 +127,10 @@ print(case(icase))
 
 	end if
 	if(compare_type(icomp) .eq."cmip-obs")then
-;		casename 		= (/"","BC5_f19g16_cosp","BC5_f19g16_mac2_cosp"/)
+		casename 		= (/"","BC5_f19g16_cosp","BC5_f19g16_mac2_cosp"/)
 ;		casename 		= (/"","BC5_f19g16_cosp","BC5_f19g16_sstvt_abs_100percent"/)
 ;		casename 		= (/"","BC5_f19g16_cosp","BC5_f19g16_sstvt_enlarge_region_0.75"/)
-		casename 		= (/"","BC5_f19g16_cosp","BC5_f19g16_sstvt_0.52"/)
+;		casename 		= (/"","BC5_f19g16_cosp","BC5_f19g16_sstvt_0.52"/)
 
 
 		fdir 			= (/Dir+"obs/",Dir+"atm/",Dir+"atm/"/)
@@ -375,7 +376,7 @@ end if
 ; Setting Resources
 ;=====================================================================
 
-plot_type			= "x11"
+plot_type			= "pdf"
 
 ;wks   = gsn_open_wks (plot_type, "./figure/fig1_lat_lon_"+var(ivar)+"_"+compare_type(icomp)+"_"+case(icase)+"_"+season(is)+"_onvector-"+on_vector+"_online-"+on_line+"_"+latE+"_"+lonE+"_revision_1_no_OrderNumber" ) 
 
@@ -423,6 +424,15 @@ res@tmYLLabelFontHeightF  	= 0.02
 res1				= res
 ;res1@cnFillPalette        	= cmap1(:150,:)
 
+res1@tmXBMinorOn 				= False
+res1@tmYLMinorOn				= False
+res1@tmXTOn						= False
+res1@tmYROn						= False
+res1@tmXBTickSpacingF			= 60.
+res1@tmXBLabelFontHeightF		= 0.028
+res1@tmYLLabelFontHeightF		= 0.028
+
+
 ;----------------------------------------------------------
 ; Set center/right/left strings
 ;----------------------------------------------------------
@@ -431,7 +441,7 @@ res1				= res
 if(compare_type(icomp).eq."cmip-amip")then
 	string_cli 		= (/"OBS","AMIP_"+case(icase),"Coupled_"+case(icase)/)
 else
-	string_cli 		= (/"OBS","DEF","NEW"/)
+	string_cli 		= (/"OBS","Park_RH","Gauss_PDF"/)
 end if
 
 ;-----------------------------------------
@@ -460,34 +470,32 @@ mpres@mpGridAndLimbDrawOrder	= "Predraw"
 ;-----------------------------------------------------
 ; Set shaded resources
 ;-----------------------------------------------------
-sdres				= res1
-sdres@cnFillOn 			= True
-sdres@cnLinesOn 		= False
-sdres@cnLineLabelsOn 		= False
+sdres							= res1
+sdres@cnFillOn 					= True
+sdres@cnLinesOn 				= False
+sdres@cnLineLabelsOn 			= False
 
-sdres@cnFillPalette        	= cmap1
+sdres@cnFillPalette        		= cmap1
 
-sdres@cnLevelSelectionMode        = "ExplicitLevels"
-sdres@cnLevels                    = var_levs(ivar,:)
+sdres@cnLevelSelectionMode		= "ExplicitLevels"
+sdres@cnLevels					= var_levs(ivar,:)
 
-sdres@lbOrientation 		= "Vertical"
+sdres@lbOrientation 			= "Vertical"
 sdres@pmLabelBarOrthogonalPosF 	= -0.01
-sdres@lbLabelAutoStride    	= True
+sdres@lbLabelAutoStride    		= True
+sdres@lbLabelFontHeightF		= 0.018
 
-sdres@lbLabelFontHeightF	= 0.015
-
-sdres@lbTitleOn			= True
-sdres@lbTitleString		= var_units(ivar)
-sdres@lbTitlePosition		= "Top"
-sdres@lbTitleFontHeightF	= 0.015
+sdres@lbTitleOn					= True
+sdres@lbTitleString				= var_units(ivar)
+sdres@lbTitlePosition			= "Top"
+sdres@lbTitleFontHeightF		= 0.018
 
 sdres@gsnLeftStringOrthogonalPosF = 0.04
 ;sdres@gsnCenterStringOrthogonalPosF = 0.025
 ;sdres@gsnRightStringOrthogonalPosF = 0.025
 
-sdres@gsnStringFontHeightF	= 0.04
-
-
+ft								= 0.05
+sdres@gsnStringFontHeightF		= ft
 
 
 ;----------------------------------------------------------
@@ -568,6 +576,7 @@ resov@cnLineColor			= "black"
 do icli = 0,2
 	sdres@gsnLeftString 	= string_cli(icli)
 ;	vcres@gsnRightString	= var_units(ivar)
+;	sdres@gsnRightString	= var(ivar)
 
 	SST_tmp			= SST_interp(icli,{latS:latE},{lonS:lonE})
 	U_tmp			= U_interp(icli,{latS:latE},{lonS:lonE})
@@ -625,7 +634,7 @@ if(compare_type(icomp).eq."cmip-amip")then
 	               "Coupled_"+case(icase)+"-OBS",\
 		       "Coupled_"+case(icase)+"-AMIP_"+case(icase)/)
 else
-	string_diff = (/"DEF-OBS","NEW-OBS","NEW-DEF"/)
+	string_diff = (/"Park_RH-OBS","Gauss_PDF-OBS","Gauss_PDF-Park_RH"/)
 end if
 
 delete(sdres@cnFillPalette)

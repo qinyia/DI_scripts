@@ -652,9 +652,13 @@ if(type.eq."model")then
 
 	end if
 
-	if(var.eq."CLDTOT".or.var.eq."CLDLOW".or.var.eq."CLDMED".or.var.eq."CLDHGH")then
-		var_tmp 	= var_tmp*100.
+;	if(var.eq."CLDTOT".or.var.eq."CLDLOW".or.var.eq."CLDMED".or.var.eq."CLDHGH")then
+;		var_tmp 	= var_tmp*100.
+;	end if
+	if(var.eq."CLDLOW_CAL")then
+		var_tmp = var_tmp/100.
 	end if
+
 	if(var.eq."TGCLDLWP")then
 		var_tmp = var_tmp*1000.
 	end if
@@ -811,6 +815,10 @@ if(type.eq."obs")then
 
 	if(var.eq."FSNS".or.var.eq."FSNT")then
 		var_tmp = var_tmp*(-1.)
+	end if
+
+	if(var.eq."CLDLOW_CAL")then
+		var_tmp = var_tmp/100.
 	end if
 
 	data_out = var_tmp

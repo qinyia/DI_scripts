@@ -55,7 +55,7 @@ compare_type 			= (/"cmip-obs"/)
 
 case				= (/"def","new"/)
 
-Dir				= "/home/share3/lyl/work3/qinyi/double-ITCZ/data/"
+Dir				= "/home/share3/lyl/work3/qinyi/data/double-ITCZ/"
 
 do icomp = 0,dimsizes(compare_type)-1
 print(compare_type(icomp))
@@ -75,7 +75,7 @@ print(var2D(ivar))
 
 	end if
 	if(compare_type(icomp) .eq."cmip-obs")then
-		casename = (/"","BC5_f19g16","BC5_f19g16_mac2"/)
+		casename = (/"","BC5_f19g16_cosp","BC5_f19g16_mac2_cosp"/)
 		fdir = (/Dir+"obs/",Dir+"atm/",Dir+"atm/"/)
 
 	end if

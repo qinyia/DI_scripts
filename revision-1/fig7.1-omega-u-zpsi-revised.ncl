@@ -158,13 +158,14 @@ compare_type 		= (/"cmip-obs"/)
 
 endyear			= (/"0004","0006","0008","0012"/)
 
-Dir			= "/home/lyl/WORK3/qinyi/double-ITCZ/data/"
+Dir			= "/home/lyl/WORK3/qinyi/data/double-ITCZ/"
 
 do icomp = 0,dimsizes(compare_type)-1
 print(compare_type(icomp))
+sstvt_case		= (/"BC5_f19g16_mac2_cosp"/)
 
-sstvt_case		= (/"BC5_f19g16_mac2_cosp","BC5_f19g16_sstvt_0.52",\
-			    "BC5_f19g16_sstvt_enlarge_region_0.75","BC5_f19g16_sstvt_abs_100percent","BC5_f19g16_sstvt_0.85"/)
+;sstvt_case		= (/"BC5_f19g16_mac2_cosp","BC5_f19g16_sstvt_0.52",\
+;			    "BC5_f19g16_sstvt_enlarge_region_0.75","BC5_f19g16_sstvt_abs_100percent","BC5_f19g16_sstvt_0.85"/)
 ;sstvt_case		= (/"BC5_f19g16_sstvt_0.85"/)
 ;sstvt_case		= (/"BC5_f19g16_sstvt_0.52"/)
 
@@ -312,7 +313,9 @@ res@vpWidthF				= 0.7
 res@vpHeightF				= 0.4
 
 res@gsnPresHgtHeightLabelOn		= False
+
 res@tmYROn				= False
+res@tmXTOn				= False
 
 pmslres 				= res 
 lrhes 					= res
@@ -365,6 +368,7 @@ psires@gsnContourZeroLineThicknessF	= 0.0
 psires@tmXBOn				= False
 psires@tmYLOn				= False
 psires@tmYROn				= False
+psires@tmXTOn				= False
 
 ;---------------------------------------------------
 ; line range
@@ -408,7 +412,7 @@ omegres@lbLabelAutoStride 		= True
 ;omegres@lbTitlePosition 		= "Right"
 ;omegres@lbTitleDirection 		= "Across"
 
-omegres@lbTitleString			= "hPa/day"
+omegres@lbTitleString			= "hPa day~S~-1~N~"
 ;omegres@lbTitleJust			= "BottomRight"
 
 ;omegres@lbTitlePosition		= "Right"
@@ -425,7 +429,7 @@ omegres@cnLevelSpacingF      		= 5.
 
 ;*******************((CREATE PLOTS))******************
 ;*****************************************************
-wks_type 				= "pdf"
+wks_type 				= "x11"
 ;wks_type@wkWidth 			= 1250
 ;wks_type@wkHeight 			= 1250
 
@@ -459,9 +463,9 @@ plot(2)					= gsn_csm_pres_hgt(wks,psi_3,psires)
 
 omegres@gsnLeftString			= "OBS"
 plot_ov1  				= gsn_csm_pres_hgt(wks,omega_1,omegres)
-omegres@gsnLeftString			= "DEF"
+omegres@gsnLeftString			= "Park_RH"
 plot_ov2  				= gsn_csm_pres_hgt(wks,omega_2,omegres)
-omegres@gsnLeftString			= "NEW"
+omegres@gsnLeftString			= "Gauss_PDF"
 plot_ov3  				= gsn_csm_pres_hgt(wks,omega_3,omegres)
 
 overlay(plot(0),plot_ov1)
@@ -517,17 +521,17 @@ psi_32					= (/psi_3-psi_2/)
 plotd					= new(3,graphic)
 
 
-omegres@gsnLeftString			= "DEF-OBS"
+omegres@gsnLeftString			= "Park_RH-OBS"
 plotd(0) 				= gsn_csm_pres_hgt(wks,psi_21,psires)
 plot_ov1  				= gsn_csm_pres_hgt(wks,omega_21,omegres)
 overlay(plotd(0),plot_ov1)
 
-omegres@gsnLeftString			= "NEW-OBS"
+omegres@gsnLeftString			= "Gauss_PDF-OBS"
 plotd(1) 				= gsn_csm_pres_hgt(wks,psi_31,psires)
 plot_ov2  				= gsn_csm_pres_hgt(wks,omega_31,omegres)
 overlay(plotd(1),plot_ov2)
 
-omegres@gsnLeftString			= "NEW-DEF"
+omegres@gsnLeftString			= "Gauss_PDF-Park_RH"
 plotd(2) 				= gsn_csm_pres_hgt(wks,psi_32,psires)
 plot_ov3  				= gsn_csm_pres_hgt(wks,omega_32,omegres)
 overlay(plotd(2),plot_ov3)

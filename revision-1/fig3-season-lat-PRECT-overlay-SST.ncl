@@ -58,7 +58,7 @@ SSTsp_Diff2_levs		= (/-2.5,-1.5,-0.5,0.5,1.5,2.5/)
 var				=(/"PRECT","SST"/)
 var_levs			= (/PRECT_levs,SST_levs/)
 varDiff_levs			= (/PRECT_Diff_levs,SST_Diff_levs/)
-var_units			= (/"mm/day","degC"/)
+var_units			= (/"mm day~S~-1~N~","degC"/)
 
 on_line				= True
 line_var			= (/"SST"/)
@@ -71,7 +71,7 @@ compare_type 			= (/"cmip-obs"/)
 
 case				= (/"def","new"/)
 
-Dir				= "/home/share3/lyl/work3/qinyi/double-ITCZ/data/"
+Dir				= "/home/share3/lyl/work3/qinyi/data/double-ITCZ/"
 
 do icomp = 0,dimsizes(compare_type)-1
 	print(compare_type(icomp))
@@ -86,7 +86,8 @@ do ivar=0,dimsizes(var)-1
 
 	end if
 	if(compare_type(icomp) .eq."cmip-obs")then
-		casename 	= (/"","BC5_f19g16","BC5_f19g16_mac2"/)
+;		casename 	= (/"","BC5_f19g16","BC5_f19g16_mac2"/)
+		casename 	= (/"","BC5_f19g16_cosp","BC5_f19g16_mac2_cosp"/)
 		fdir 		= (/Dir+"obs/",Dir+"atm/",Dir+"atm/"/)
 
 	end if
@@ -382,7 +383,7 @@ resov2@cnLineColor			= "black"
 if(compare_type(icomp).eq."cmip-amip")then
 	string_cli 			= (/"OBS","AMIP_"+case(icase),"Coupled_"+case(icase)/)
 else
-	string_cli 			= (/"OBS","DEF","NEW"/)
+	string_cli 			= (/"OBS","Park_RH","Gauss_PDF"/)
 end if
 
 
@@ -416,7 +417,7 @@ if(compare_type(icomp).eq."cmip-amip")then
 	               "Coupled_"+case(icase)+"-OBS",\
 		       "Coupled_"+case(icase)+"-AMIP_"+case(icase)/)
 else
-	string_diff = (/"DEF-OBS","NEW-OBS","NEW-DEF"/)
+	string_diff = (/"RH-OBS","PDF-OBS","PDF-RH"/)
 end if
 
 do idiff = 0,2

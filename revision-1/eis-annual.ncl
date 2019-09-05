@@ -80,7 +80,8 @@ end
 
 begin 
 
-fdir				= "/home/share3/lyl/work3/qinyi/double-ITCZ/data/atm/"
+;fdir				= "/home/share3/lyl/work3/qinyi/double-ITCZ/data/atm/"
+fdir				= "/home/share3/lyl/work3/qinyi/data/double-ITCZ/atm/"
 
 case 				= (/"BC5_f19g16_cosp",\
 		 		    "BC5_f19g16_mac2_cosp"/)
@@ -182,7 +183,7 @@ printVarSummary(varout_data)
 
 do ivar=0,dimsizes(varout)-1
 
-wks 				= gsn_open_wks("pdf","./figure/"+varout(ivar))
+wks 				= gsn_open_wks("x11","./figure/"+varout(ivar))
 
 cmap1 					= read_colormap_file("WhiteBlueGreenYellowRed")
 ;cmap2 					= read_colormap_file("BlueRed")
@@ -231,16 +232,16 @@ res@cnLevels                    	= vars_levs(ivar,:)
 
 plot					= new(3,graphic)
 
-res@gsnLeftString			= "DEF"
+res@gsnLeftString			= "(a) Park_RH"
 plot(0)					= gsn_csm_contour_map(wks,varout_data(ivar,0,:,:),res)
 
-res@gsnLeftString			= "NEW"
+res@gsnLeftString			= "(b) Gauss_PDF"
 plot(1)					= gsn_csm_contour_map(wks,varout_data(ivar,1,:,:),res)
 
 delete(res@cnFillPalette)
 res@cnLevels                    	= vars_dlevs_2(ivar,:)
 res@cnFillPalette       		= cmap2
-res@gsnLeftString			= "NEW-DEF"
+res@gsnLeftString			= "(c) PDF-RH"
 plot(2)					= gsn_csm_contour_map(wks,varout_data_diff(ivar,:,:),res)
 
 resP = True
